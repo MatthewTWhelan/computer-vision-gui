@@ -144,9 +144,9 @@ class CVWindow:
         # Two radio buttons to select between average and Gaussian smoothing/blurring
         self.root.var_smooth = tk.IntVar()
         self.R6 = tk.Radiobutton(self.root, text="Average smoothing", variable=self.root.var_smooth, value=0,
-                                 background="white", highlightthickness=0, command=lambda: self.loadImage(0))
+                                 background="white", highlightthickness=0)
         self.R7 = tk.Radiobutton(self.root, text="Gaussian blurring", variable=self.root.var_smooth, value=1,
-                                 background="white", highlightthickness=0, command=lambda: self.loadImage(0))
+                                 background="white", highlightthickness=0)
         self.R6.place(x=420, y=410)
         self.R7.place(x=420, y=435)
 
@@ -154,17 +154,17 @@ class CVWindow:
         self.label3 = tk.Label(self.root, text="Kernel size: ", background="white")
         self.label3.place(x=420, y=477)
 
-        self.S3 = tk.Scale(self.root, from_=0, to=15, orient="horizontal", background="white", highlightthickness=0)
+        self.S3 = tk.Scale(self.root, from_=3, to=25, orient="horizontal", background="white", highlightthickness=0,
+                           command=self.fix_slider)
         self.S3.place(x=510, y=457)
 
         self.root.mainloop()
 
     # There is a bug in tk.Scale which doesn't allow odd numbers in steps of two to be shown. This is a quick fix for that.
-    def fix(self):
-        val = self.S4.get()
+    def fix_slider(self, n):
+        val = int(n)
         if val % 2 == 0:
-            self.S4.set(val+1)
-
+            self.S3.set(str(val+1))
 
     def loadImage(self, img_no):
         self.img_display.configure(image=self.root.imgs[img_no])
@@ -179,28 +179,53 @@ class CVWindow:
                 self.buttons[i].configure(background="light green")
 
     ####################################################################################################################
-    # Seperate windows that open upon pressing the help buttons
+    # Separate windows that open upon pressing the help buttons
 
     def colour_segment_help(self):
         self.window1 = tk.Toplevel(self.root, background="white")
         self.window1.title("Colour Segmentation")
-        self.window1.geometry("600x700")
+        self.window1.geometry("600x600")
 
         scrollbar = tk.Scrollbar(self.window1)
         scrollbar.pack(side="right", fill="both")
-        scrollbar.config(command=canvas.yview)
 
-        canvas = tk.Canvas(self.window1, width=600, height=1000, bg="white", yscrollcommand=scrollbar.set)
-        canvas.pack(expand="yes", side="left", padx=10)
-        canvas.create_image(x=10, y=0, image=self.img_colour_segmentation_help)
-
+        canvas = tk.Canvas(self.window1, width=600, height=700, bg="white", highlightthickness=0,
+                           yscrollcommand=scrollbar.set)
+        canvas.pack(expand="yes", fill="both", padx=10)
+        canvas.create_image((0, 0), image=self.img_colour_segmentation_help, anchor="nw")
         scrollbar.config(command=canvas.yview)
+        canvas.configure(scrollregion=canvas.bbox('all'))
 
     def edge_detection_help(self):
-        self.window2 = tk.Toplevel(self.root)
+        self.window2 = tk.Toplevel(self.root, background="white")
+        self.window2.title("Edge Detection")
+        self.window2.geometry("600x600")
+
+        scrollbar = tk.Scrollbar(self.window2)
+        scrollbar.pack(side="right", fill="both")
+
+        canvas = tk.Canvas(self.window2, width=600, height=700, bg="white", highlightthickness=0,
+                           yscrollcommand=scrollbar.set)
+        canvas.pack(expand="yes", fill="both", padx=10)
+        canvas.create_image((0, 0), image=self.img_colour_segmentation_help, anchor="nw")
+        scrollbar.config(command=canvas.yview)
+        canvas.configure(scrollregion=canvas.bbox('all'))
+
 
     def smoothing_blurring_help(self):
-        self.window3 = tk.Toplevel(self.root)
+        self.window3 = tk.Toplevel(self.root, background="white")
+        self.window3.title("Smoothing and Blurring")
+        self.window3.geometry("600x600")
+
+        scrollbar = tk.Scrollbar(self.window3)
+        scrollbar.pack(side="right", fill="both")
+
+        canvas = tk.Canvas(self.window3, width=600, height=700, bg="white", highlightthickness=0,
+                           yscrollcommand=scrollbar.set)
+        canvas.pack(expand="yes", fill="both", padx=10)
+        canvas.create_image((0, 0), image=self.img_colour_segmentation_help, anchor="nw")
+        scrollbar.config(command=canvas.yview)
+        canvas.configure(scrollregion=canvas.bbox('all'))
 
 
     ####################################################################################################################
@@ -242,16 +267,13 @@ class CVWindow:
         self.img_processed.configure(image=self.root.img_processed)
 
     def smoothing_blurring(self):
-        #self.msg = messagebox.showinfo("!")
         self.buttonColour(2)
 
         img_no = self.var.get()
         image_name = self.image_dir + "image" + str(img_no + 1) + ".jpg"
         img = cv.imread(image_name)
 
-        #kernel_size = (self.S3.get() + 1, self.S3.get() + 1)
-        kernel_size = (5,5)
-        print(kernel_size[0])
+        kernel_size = (int(self.S3.get()), int(self.S3.get()))
 
         if not self.root.var_smooth.get():
             # average smoothing
@@ -266,6 +288,3 @@ class CVWindow:
         self.img_processed.configure(image=self.root.img_processed)
 
 app = CVWindow()
-#app.main()
-#
-#
