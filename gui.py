@@ -29,6 +29,9 @@ class CVWindow:
 
         # The help windows (uploaded as images for simplicity)
         self.img_colour_segmentation_help = ImageTk.PhotoImage(Image.open(self.image_dir + "colour_segmentation_help.jpg"))
+        self.img_edge_detection_help = ImageTk.PhotoImage(Image.open(self.image_dir + "edge_detection_help.jpg"))
+        self.img_smoothing_blurring_help = ImageTk.PhotoImage(Image.open(self.image_dir + "smoothing_blurring_help.jpg"))
+
 
         # To avoid the processed image being garbaged, it is saved upon each processing operation
         self.root.img_processed = ImageTk.PhotoImage(Image.open(self.image_dir + "image_processed_init.jpg"))
@@ -206,8 +209,8 @@ class CVWindow:
 
         canvas = tk.Canvas(self.window2, width=600, height=700, bg="white", highlightthickness=0,
                            yscrollcommand=scrollbar.set)
-        canvas.pack(expand="yes", fill="both", padx=10)
-        canvas.create_image((0, 0), image=self.img_colour_segmentation_help, anchor="nw")
+        canvas.pack(expand="yes", fill="both")
+        canvas.create_image((0, 0), image=self.img_edge_detection_help, anchor="nw")
         scrollbar.config(command=canvas.yview)
         canvas.configure(scrollregion=canvas.bbox('all'))
 
@@ -222,8 +225,8 @@ class CVWindow:
 
         canvas = tk.Canvas(self.window3, width=600, height=700, bg="white", highlightthickness=0,
                            yscrollcommand=scrollbar.set)
-        canvas.pack(expand="yes", fill="both", padx=10)
-        canvas.create_image((0, 0), image=self.img_colour_segmentation_help, anchor="nw")
+        canvas.pack(expand="yes", fill="both")
+        canvas.create_image((0, 0), image=self.img_smoothing_blurring_help, anchor="nw")
         scrollbar.config(command=canvas.yview)
         canvas.configure(scrollregion=canvas.bbox('all'))
 
