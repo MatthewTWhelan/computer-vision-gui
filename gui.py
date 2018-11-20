@@ -290,4 +290,6 @@ class CVWindow:
         self.root.img_processed = ImageTk.PhotoImage(Image.open(self.image_dir + "image_processed.jpg"))
         self.img_processed.configure(image=self.root.img_processed)
 
-app = CVWindow()
+
+if __name__ == '__main__':
+    app = CVWindow()
