@@ -16,6 +16,8 @@ class CVWindow:
         self.root.geometry("680x580")
         self.root.configure(background="white")
 
+        self.img_no = 0
+
         self.uos_image = ImageTk.PhotoImage(Image.open(self.image_dir + "UoS.jpg"))
         self.uos_label = tk.Label(self.root, image=self.uos_image, borderwidth=0).place(x=550, y=520)
 
@@ -138,10 +140,10 @@ class CVWindow:
         self.label2.place(x=420, y=293)
 
         self.S1 = tk.Scale(self.root, from_=0, to=500, orient="horizontal", background="white", border=0,
-                           highlightthickness=0 )
+                           highlightthickness=0, command=lambda x: self.edge_detection())
         self.S1.place(x=510, y=235)
         self.S2 = tk.Scale(self.root, from_=0, to=500, orient="horizontal", background="white", border=0,
-                           highlightthickness = 0)
+                           highlightthickness = 0, command=lambda x: self.edge_detection())
         self.S2.place(x=510, y=275)
 
         # Two radio buttons to select between average and Gaussian smoothing/blurring
@@ -168,6 +170,7 @@ class CVWindow:
         val = int(n)
         if val % 2 == 0:
             self.S3.set(str(val+1))
+        self.smoothing_blurring()
 
     def loadImage(self, img_no):
         self.img_display.configure(image=self.root.imgs[img_no])
@@ -235,15 +238,16 @@ class CVWindow:
     # Here are the computer vision algorithms, deployed using the open source OpenCV package
 
     def colour_segment(self):
+        self.img_no = 0
         self.buttonColour(0)
 
-        lower_limit = ( int(self.text_box1.get('1.0', 'end-1c')),
+        lower_limit = ( int(self.text_box3.get('1.0', 'end-1c')),
                         int(self.text_box2.get('1.0', 'end-1c')),
-                        int(self.text_box3.get('1.0', 'end-1c'))
+                        int(self.text_box1.get('1.0', 'end-1c'))
                         )
-        upper_limit = ( int(self.text_box4.get('1.0', 'end-1c')),
+        upper_limit = ( int(self.text_box6.get('1.0', 'end-1c')),
                         int(self.text_box5.get('1.0', 'end-1c')),
-                        int(self.text_box6.get('1.0', 'end-1c'))
+                        int(self.text_box4.get('1.0', 'end-1c'))
                         )
 
         img_no = self.var.get()
@@ -256,6 +260,7 @@ class CVWindow:
         self.img_processed.configure(image=self.root.img_processed)
 
     def edge_detection(self):
+        self.img_no = 1
         self.buttonColour(1)
 
         lower_limit = self.S1.get()
@@ -270,6 +275,7 @@ class CVWindow:
         self.img_processed.configure(image=self.root.img_processed)
 
     def smoothing_blurring(self):
+        self.img_no = 2
         self.buttonColour(2)
 
         img_no = self.var.get()
