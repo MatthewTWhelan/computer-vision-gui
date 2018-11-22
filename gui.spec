@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['gui.py'],
-             pathex=['/home/shefrob/cv-examples'],
+             pathex=['/home/matt/cv-examples'],
              binaries=[],
              datas=[],
              hiddenimports=['PIL._tkinter_finder'],
