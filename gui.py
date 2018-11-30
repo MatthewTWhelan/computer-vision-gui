@@ -13,13 +13,18 @@ class CVWindow:
 
         self.root = tk.Tk()
         self.root.title("Computer Vision Examples")
-        self.root.geometry("680x580")
+        self.root.geometry("700x770")
         self.root.configure(background="white")
+
+        self.gui_title = tk.Message(self.root, text="Examples of some Basic Computer Vision Processes", background="light blue",
+                                  font=("Courier", 15), width=300)
+        self.gui_title.place(x=10, y=10)
 
         self.img_no = 0
 
+        # Uni of Sheff image
         self.uos_image = ImageTk.PhotoImage(Image.open(self.image_dir + "UoS.jpg"))
-        self.uos_label = tk.Label(self.root, image=self.uos_image, borderwidth=0).place(x=550, y=520)
+        self.uos_label = tk.Label(self.root, image=self.uos_image, borderwidth=0).place(x=10, y=700)
 
         # 5 sample images to choose from
         self.root.imgs = list()
@@ -40,7 +45,7 @@ class CVWindow:
 
         # They can be selected with radio buttons
         self.Label1 = tk.Label(self.root, text="Select an image:", background="white")
-        self.Label1.place(x=10, y=10)
+        self.Label1.place(x=10, y=100)
 
         self.var = tk.IntVar()
         self.R1 = tk.Radiobutton(self.root, text="1", variable=self.var, value=0, background="white",
@@ -53,25 +58,25 @@ class CVWindow:
                                  highlightthickness=0, command=lambda: self.loadImage(3))
         self.R5 = tk.Radiobutton(self.root, text="5", variable=self.var, value=4, background="white",
                                  highlightthickness=0, command=lambda: self.loadImage(4))
-        self.R1.place(x=120, y=10)
-        self.R2.place(x=160, y=10)
-        self.R3.place(x=200, y=10)
-        self.R4.place(x=240, y=10)
-        self.R5.place(x=280, y=10)
+        self.R1.place(x=120, y=100)
+        self.R2.place(x=160, y=100)
+        self.R3.place(x=200, y=100)
+        self.R4.place(x=240, y=100)
+        self.R5.place(x=280, y=100)
 
 
         # display the first image initially
         self.img_display = tk.Label(self.root, image=self.root.imgs[0])
-        self.img_display.place(x=10, y=40)
+        self.img_display.place(x=10, y=130)
 
         # insert an arrow between the two images
         self.root.img_arrow = ImageTk.PhotoImage(Image.open(self.image_dir + "arrow.jpg"))
         self.img_arrow_display = tk.Label(self.root, image=self.root.img_arrow, background="white")
-        self.img_arrow_display.place(x=185, y=290)
+        self.img_arrow_display.place(x=185, y=385)
 
         # display the processed image
         self.img_processed = tk.Label(self.root, image=self.root.img_processed)
-        self.img_processed.place(x=10, y=320)
+        self.img_processed.place(x=10, y=420)
 
         # The buttons handle the CV algorithm employed on the image
         self.buttons = list()
@@ -81,17 +86,22 @@ class CVWindow:
                                       command=lambda: self.edge_detection()))
         self.buttons.append(tk.Button(self.root, text="Blurring and Smoothing", borderwidth=1, background="light grey",
                                       command=lambda: self.smoothing_blurring()))
+        self.buttons.append(tk.Button(self.root, text="Difference of Gaussians", borderwidth=1, background="light grey",
+                                      command=lambda: self.difference_gaussians()))
         self.buttons[0].place(x=420, y=40)
         self.buttons[1].place(x=420, y=190)
         self.buttons[2].place(x=420, y=365)
+        self.buttons[3].place(x=420, y=620)
 
         # Buttons that open a help window and that describe the algorithms
         self.BH1 = tk.Button(self.root, text="?", command=lambda: self.colour_segment_help())
         self.BH2 = tk.Button(self.root, text="?", command=lambda: self.edge_detection_help())
         self.BH3 = tk.Button(self.root, text="?", command=lambda: self.smoothing_blurring_help())
+        self.BH4 = tk.Button(self.root, text="?", command=lambda: self.smoothing_blurring_help())
         self.BH1.place(x=620, y=40)
         self.BH2.place(x=620, y=190)
         self.BH3.place(x=620, y=365)
+        self.BH4.place(x=620, y=620)
 
         # Lines to section off each image process
         self.grey_line = ImageTk.PhotoImage(Image.open(self.image_dir + "grey_line.jpg"))
@@ -100,7 +110,7 @@ class CVWindow:
         self.line3 = tk.Label(self.root, image=self.grey_line, borderwidth=0)
         self.line1.place(x=420, y=160)
         self.line2.place(x=420, y=330)
-        #self.line3.place(x=420, y=480)
+        self.line3.place(x=420, y=580)
 
         # The first algorithm has 6 values that can be changed: the lower and upper limits of colour segmentation for RGB
         self.label1 = tk.Label(self.root, text="Lower limit: ", background="white")
@@ -146,22 +156,39 @@ class CVWindow:
                            highlightthickness = 0, command=lambda x: self.edge_detection())
         self.S2.place(x=510, y=275)
 
-        # Two radio buttons to select between average and Gaussian smoothing/blurring
+        # Three radio buttons to select between average and Gaussian smoothing/blurring
         self.root.var_smooth = tk.IntVar()
         self.R6 = tk.Radiobutton(self.root, text="Average smoothing", variable=self.root.var_smooth, value=0,
                                  background="white", highlightthickness=0)
         self.R7 = tk.Radiobutton(self.root, text="Gaussian blurring", variable=self.root.var_smooth, value=1,
                                  background="white", highlightthickness=0)
-        self.R6.place(x=420, y=410)
-        self.R7.place(x=420, y=435)
+        self.R8 = tk.Radiobutton(self.root, text="Difference of Gaussian;", variable=self.root.var_smooth,
+                                 value=2, background="white", highlightthickness=0)
+        self.R6.place(x=420, y=420)
+        self.R7.place(x=420, y=500)
 
-        # Scale to set the blurring and smoothing kernel size
-        self.label3 = tk.Label(self.root, text="Kernel size: ", background="white")
-        self.label3.place(x=420, y=477)
 
-        self.S3 = tk.Scale(self.root, from_=3, to=25, orient="horizontal", background="white", highlightthickness=0,
-                           command=self.fix_slider)
-        self.S3.place(x=510, y=457)
+        # Scale to set the blurring kernel size
+        self.S3 = tk.Scale(self.root, from_=3, to=15, orient="horizontal", background="white", highlightthickness=0,
+                           command=self.fix_slider, length=80)
+        self.S3.place(x=520, y=440)
+
+        # Scale to set the Gaussian standard deviation
+        self.S4 = tk.Scale(self.root, from_=0.1, to=5, resolution=0.2, orient="horizontal", background="white",
+                           highlightthickness=0, length=80, command=lambda x: self.smoothing_blurring())
+        self.S4.place(x=570, y=520)
+        tk.Label(self.root, text="Kernel Size =", background="white").place(x=420, y=460)
+        tk.Label(self.root, text="Standard Deviation =", background="white").place(x=420, y=540)
+
+        # Scales to set the Difference of Gaussian standard deviations
+        self.S5 = tk.Scale(self.root, from_=1, to=1.4, resolution=0.02, orient="horizontal", background="white",
+                           highlightthickness=0, length=80, command=lambda x: self.difference_gaussians())
+        self.S6 = tk.Scale(self.root, from_=1, to=1.4, resolution=0.02, orient="horizontal", background="white",
+                           highlightthickness=0, length=80, command=lambda x: self.difference_gaussians())
+        self.S5.place(x=580, y=660)
+        self.S6.place(x=580, y=710)
+        tk.Label(self.root, text="Standard Deviation 1 =", background="white").place(x=420, y=680)
+        tk.Label(self.root, text="Standard Deviation 2 =", background="white").place(x=420, y=730)
 
         self.root.mainloop()
 
@@ -177,7 +204,7 @@ class CVWindow:
 
     # Changes the colour of the button selected
     def buttonColour(self, button_no):
-        for i in range(3):
+        for i in range(4):
             if not button_no == i:
                 self.buttons[i].configure(background="light grey")
             else:
@@ -233,7 +260,6 @@ class CVWindow:
         scrollbar.config(command=canvas.yview)
         canvas.configure(scrollregion=canvas.bbox('all'))
 
-
     ####################################################################################################################
     # Here are the computer vision algorithms, deployed using the open source OpenCV package
 
@@ -288,9 +314,30 @@ class CVWindow:
             # average smoothing
             kernel = np.ones(kernel_size, np.float32) / kernel_size[0]**2
             img_processed = cv.filter2D(img, -1, kernel)
+
         else:
             # Gaussian blurring
-            img_processed = cv.GaussianBlur(img, kernel_size, 0)
+            sigma = self.S4.get()
+            img_processed = cv.GaussianBlur(img, (0,0), sigma) # kernel size computed as: [(sigma - 0.8)/0.3 + 1] / 0.5 + 1
+                                                               # see opencv documentation
+
+        cv.imwrite(self.image_dir + "image_processed.jpg", img_processed)
+        self.root.img_processed = ImageTk.PhotoImage(Image.open(self.image_dir + "image_processed.jpg"))
+        self.img_processed.configure(image=self.root.img_processed)
+
+    def difference_gaussians(self):
+        self.img_no = 3
+        self.buttonColour(3)
+
+        img_no = self.var.get()
+        image_name = self.image_dir + "image" + str(img_no + 1) + ".jpg"
+        img = cv.imread(image_name)
+
+        sigma1 = self.S5.get()
+        sigma2 = self.S6.get()
+        img_gauss1 = cv.GaussianBlur(img, (0, 0), sigma1)
+        img_gauss2 = cv.GaussianBlur(img, (0, 0), sigma2)
+        img_processed = img_gauss1 - img_gauss2
 
         cv.imwrite(self.image_dir + "image_processed.jpg", img_processed)
         self.root.img_processed = ImageTk.PhotoImage(Image.open(self.image_dir + "image_processed.jpg"))
