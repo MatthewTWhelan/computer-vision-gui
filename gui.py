@@ -38,7 +38,7 @@ class CVWindow:
         self.img_colour_segmentation_help = ImageTk.PhotoImage(Image.open(self.image_dir + "colour_segmentation_help.jpg"))
         self.img_edge_detection_help = ImageTk.PhotoImage(Image.open(self.image_dir + "edge_detection_help.jpg"))
         self.img_smoothing_blurring_help = ImageTk.PhotoImage(Image.open(self.image_dir + "smoothing_blurring_help.jpg"))
-
+        self.img_difference_gaussian_help = ImageTk.PhotoImage(Image.open(self.image_dir + "DoG_help.jpg"))
 
         # To avoid the processed image being garbaged, it is saved upon each processing operation
         self.root.img_processed = ImageTk.PhotoImage(Image.open(self.image_dir + "image_processed_init.jpg"))
@@ -97,7 +97,7 @@ class CVWindow:
         self.BH1 = tk.Button(self.root, text="?", command=lambda: self.colour_segment_help())
         self.BH2 = tk.Button(self.root, text="?", command=lambda: self.edge_detection_help())
         self.BH3 = tk.Button(self.root, text="?", command=lambda: self.smoothing_blurring_help())
-        self.BH4 = tk.Button(self.root, text="?", command=lambda: self.smoothing_blurring_help())
+        self.BH4 = tk.Button(self.root, text="?", command=lambda: self.difference_gaussian_help())
         self.BH1.place(x=620, y=40)
         self.BH2.place(x=620, y=190)
         self.BH3.place(x=620, y=365)
@@ -257,6 +257,21 @@ class CVWindow:
                            yscrollcommand=scrollbar.set)
         canvas.pack(expand="yes", fill="both")
         canvas.create_image((0, 0), image=self.img_smoothing_blurring_help, anchor="nw")
+        scrollbar.config(command=canvas.yview)
+        canvas.configure(scrollregion=canvas.bbox('all'))
+
+    def difference_gaussian_help(self):
+        self.window4 = tk.Toplevel(self.root, background="white")
+        self.window4.title("Difference of Gaussians")
+        self.window4.geometry("600x600")
+
+        scrollbar = tk.Scrollbar(self.window4)
+        scrollbar.pack(side="right", fill="both")
+
+        canvas = tk.Canvas(self.window4, width=600, height=700, bg="white", highlightthickness=0,
+                           yscrollcommand=scrollbar.set)
+        canvas.pack(expand="yes", fill="both")
+        canvas.create_image((0, 0), image=self.img_difference_gaussian_help, anchor="nw")
         scrollbar.config(command=canvas.yview)
         canvas.configure(scrollregion=canvas.bbox('all'))
 
