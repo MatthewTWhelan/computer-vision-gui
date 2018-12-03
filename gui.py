@@ -13,7 +13,7 @@ class CVWindow:
 
         self.root = tk.Tk()
         self.root.title("Computer Vision Examples")
-        self.root.geometry("700x770")
+        self.root.geometry("700x750")
         self.root.configure(background="white")
 
         self.gui_title = tk.Message(self.root, text="Examples of some Basic Computer Vision Processes", background="light blue",
@@ -24,7 +24,7 @@ class CVWindow:
 
         # Uni of Sheff image
         self.uos_image = ImageTk.PhotoImage(Image.open(self.image_dir + "UoS.jpg"))
-        self.uos_label = tk.Label(self.root, image=self.uos_image, borderwidth=0).place(x=10, y=700)
+        self.uos_label = tk.Label(self.root, image=self.uos_image, borderwidth=0).place(x=10, y=680)
 
         # 5 sample images to choose from
         self.root.imgs = list()
@@ -45,7 +45,7 @@ class CVWindow:
 
         # They can be selected with radio buttons
         self.Label1 = tk.Label(self.root, text="Select an image:", background="white")
-        self.Label1.place(x=10, y=100)
+        self.Label1.place(x=10, y=80)
 
         self.var = tk.IntVar()
         self.R1 = tk.Radiobutton(self.root, text="1", variable=self.var, value=0, background="white",
@@ -58,25 +58,25 @@ class CVWindow:
                                  highlightthickness=0, command=lambda: self.loadImage(3))
         self.R5 = tk.Radiobutton(self.root, text="5", variable=self.var, value=4, background="white",
                                  highlightthickness=0, command=lambda: self.loadImage(4))
-        self.R1.place(x=120, y=100)
-        self.R2.place(x=160, y=100)
-        self.R3.place(x=200, y=100)
-        self.R4.place(x=240, y=100)
-        self.R5.place(x=280, y=100)
+        self.R1.place(x=120, y=80)
+        self.R2.place(x=160, y=80)
+        self.R3.place(x=200, y=80)
+        self.R4.place(x=240, y=80)
+        self.R5.place(x=280, y=80)
 
 
         # display the first image initially
         self.img_display = tk.Label(self.root, image=self.root.imgs[0])
-        self.img_display.place(x=10, y=130)
+        self.img_display.place(x=10, y=110)
 
         # insert an arrow between the two images
         self.root.img_arrow = ImageTk.PhotoImage(Image.open(self.image_dir + "arrow.jpg"))
         self.img_arrow_display = tk.Label(self.root, image=self.root.img_arrow, background="white")
-        self.img_arrow_display.place(x=185, y=385)
+        self.img_arrow_display.place(x=185, y=365)
 
         # display the processed image
         self.img_processed = tk.Label(self.root, image=self.root.img_processed)
-        self.img_processed.place(x=10, y=420)
+        self.img_processed.place(x=10, y=400)
 
         # The buttons handle the CV algorithm employed on the image
         self.buttons = list()
@@ -88,35 +88,35 @@ class CVWindow:
                                       command=lambda: self.smoothing_blurring()))
         self.buttons.append(tk.Button(self.root, text="Difference of Gaussians", borderwidth=1, background="light grey",
                                       command=lambda: self.difference_gaussians()))
-        self.buttons[0].place(x=420, y=40)
-        self.buttons[1].place(x=420, y=190)
-        self.buttons[2].place(x=420, y=365)
-        self.buttons[3].place(x=420, y=620)
+        self.buttons[0].place(x=420, y=20)
+        self.buttons[1].place(x=420, y=170)
+        self.buttons[2].place(x=420, y=345)
+        self.buttons[3].place(x=420, y=600)
 
         # Buttons that open a help window and that describe the algorithms
         self.BH1 = tk.Button(self.root, text="?", command=lambda: self.colour_segment_help())
         self.BH2 = tk.Button(self.root, text="?", command=lambda: self.edge_detection_help())
         self.BH3 = tk.Button(self.root, text="?", command=lambda: self.smoothing_blurring_help())
         self.BH4 = tk.Button(self.root, text="?", command=lambda: self.smoothing_blurring_help())
-        self.BH1.place(x=620, y=40)
-        self.BH2.place(x=620, y=190)
-        self.BH3.place(x=620, y=365)
-        self.BH4.place(x=620, y=620)
+        self.BH1.place(x=620, y=20)
+        self.BH2.place(x=620, y=170)
+        self.BH3.place(x=620, y=345)
+        self.BH4.place(x=620, y=600)
 
         # Lines to section off each image process
         self.grey_line = ImageTk.PhotoImage(Image.open(self.image_dir + "grey_line.jpg"))
         self.line1 = tk.Label(self.root, image=self.grey_line, borderwidth=0)
         self.line2 = tk.Label(self.root, image=self.grey_line, borderwidth=0)
         self.line3 = tk.Label(self.root, image=self.grey_line, borderwidth=0)
-        self.line1.place(x=420, y=160)
-        self.line2.place(x=420, y=330)
-        self.line3.place(x=420, y=580)
+        self.line1.place(x=420, y=140)
+        self.line2.place(x=420, y=310)
+        self.line3.place(x=420, y=560)
 
         # The first algorithm has 6 values that can be changed: the lower and upper limits of colour segmentation for RGB
         self.label1 = tk.Label(self.root, text="Lower limit: ", background="white")
         self.label2 = tk.Label(self.root, text="Upper limit: ", background="white")
-        self.label1.place(x=420, y=100)
-        self.label2.place(x=420, y=125)
+        self.label1.place(x=420, y=80)
+        self.label2.place(x=420, y=105)
 
         self.text_box1 = tk.Text(height=1, width=4)
         self.text_box2 = tk.Text(height=1, width=4)
@@ -124,12 +124,12 @@ class CVWindow:
         self.text_box4 = tk.Text(height=1, width=4)
         self.text_box5 = tk.Text(height=1, width=4)
         self.text_box6 = tk.Text(height=1, width=4)
-        self.text_box1.place(x=510, y=100)
-        self.text_box2.place(x=545, y=100)
-        self.text_box3.place(x=580, y=100)
-        self.text_box4.place(x=510, y=125)
-        self.text_box5.place(x=545, y=125)
-        self.text_box6.place(x=580, y=125)
+        self.text_box1.place(x=510, y=80)
+        self.text_box2.place(x=545, y=80)
+        self.text_box3.place(x=580, y=80)
+        self.text_box4.place(x=510, y=105)
+        self.text_box5.place(x=545, y=105)
+        self.text_box6.place(x=580, y=105)
 
         # We provide example values from the start
         self.text_box1.insert("end", "0")
@@ -139,22 +139,22 @@ class CVWindow:
         self.text_box5.insert("end", "150")
         self.text_box6.insert("end", "255")
 
-        tk.Label(text="R", background="white").place(x=520, y=80)
-        tk.Label(text="G", background="white").place(x=555, y=80)
-        tk.Label(text="B", background="white").place(x=590, y=80)
+        tk.Label(text="R", background="white").place(x=520, y=60)
+        tk.Label(text="G", background="white").place(x=555, y=60)
+        tk.Label(text="B", background="white").place(x=590, y=60)
 
         # The edge detector has two limits that can be altered using a slider
         self.label1 = tk.Label(self.root, text="Lower limit: ", background="white")
         self.label2 = tk.Label(self.root, text="Upper limit: ", background="white")
-        self.label1.place(x=420, y=253)
-        self.label2.place(x=420, y=293)
+        self.label1.place(x=420, y=233)
+        self.label2.place(x=420, y=273)
 
         self.S1 = tk.Scale(self.root, from_=0, to=500, orient="horizontal", background="white", border=0,
                            highlightthickness=0, command=lambda x: self.edge_detection())
-        self.S1.place(x=510, y=235)
+        self.S1.place(x=510, y=215)
         self.S2 = tk.Scale(self.root, from_=0, to=500, orient="horizontal", background="white", border=0,
                            highlightthickness = 0, command=lambda x: self.edge_detection())
-        self.S2.place(x=510, y=275)
+        self.S2.place(x=510, y=255)
 
         # Three radio buttons to select between average and Gaussian smoothing/blurring
         self.root.var_smooth = tk.IntVar()
@@ -164,31 +164,31 @@ class CVWindow:
                                  background="white", highlightthickness=0)
         self.R8 = tk.Radiobutton(self.root, text="Difference of Gaussian;", variable=self.root.var_smooth,
                                  value=2, background="white", highlightthickness=0)
-        self.R6.place(x=420, y=420)
-        self.R7.place(x=420, y=500)
+        self.R6.place(x=420, y=400)
+        self.R7.place(x=420, y=480)
 
 
         # Scale to set the blurring kernel size
         self.S3 = tk.Scale(self.root, from_=3, to=15, orient="horizontal", background="white", highlightthickness=0,
                            command=self.fix_slider, length=80)
-        self.S3.place(x=520, y=440)
+        self.S3.place(x=520, y=420)
 
         # Scale to set the Gaussian standard deviation
         self.S4 = tk.Scale(self.root, from_=0.1, to=5, resolution=0.2, orient="horizontal", background="white",
                            highlightthickness=0, length=80, command=lambda x: self.smoothing_blurring())
-        self.S4.place(x=570, y=520)
-        tk.Label(self.root, text="Kernel Size =", background="white").place(x=420, y=460)
-        tk.Label(self.root, text="Standard Deviation =", background="white").place(x=420, y=540)
+        self.S4.place(x=570, y=500)
+        tk.Label(self.root, text="Kernel Size =", background="white").place(x=420, y=440)
+        tk.Label(self.root, text="Standard Deviation =", background="white").place(x=420, y=520)
 
         # Scales to set the Difference of Gaussian standard deviations
         self.S5 = tk.Scale(self.root, from_=1, to=1.4, resolution=0.02, orient="horizontal", background="white",
                            highlightthickness=0, length=80, command=lambda x: self.difference_gaussians())
         self.S6 = tk.Scale(self.root, from_=1, to=1.4, resolution=0.02, orient="horizontal", background="white",
                            highlightthickness=0, length=80, command=lambda x: self.difference_gaussians())
-        self.S5.place(x=580, y=660)
-        self.S6.place(x=580, y=710)
-        tk.Label(self.root, text="Standard Deviation 1 =", background="white").place(x=420, y=680)
-        tk.Label(self.root, text="Standard Deviation 2 =", background="white").place(x=420, y=730)
+        self.S5.place(x=580, y=640)
+        self.S6.place(x=580, y=690)
+        tk.Label(self.root, text="Standard Deviation 1 =", background="white").place(x=420, y=660)
+        tk.Label(self.root, text="Standard Deviation 2 =", background="white").place(x=420, y=710)
 
         self.root.mainloop()
 
