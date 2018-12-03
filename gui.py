@@ -97,19 +97,11 @@ class CVWindow:
         self.BH1 = tk.Button(self.root, text="?", command=lambda: self.colour_segment_help())
         self.BH2 = tk.Button(self.root, text="?", command=lambda: self.edge_detection_help())
         self.BH3 = tk.Button(self.root, text="?", command=lambda: self.smoothing_blurring_help())
-<<<<<<< HEAD
-        self.BH4 = tk.Button(self.root, text="?", command=lambda: self.smoothing_blurring_help())
+        self.BH4 = tk.Button(self.root, text="?", command=lambda: self.difference_gaussian_help())
         self.BH1.place(x=620, y=20)
         self.BH2.place(x=620, y=170)
         self.BH3.place(x=620, y=345)
         self.BH4.place(x=620, y=600)
-=======
-        self.BH4 = tk.Button(self.root, text="?", command=lambda: self.difference_gaussian_help())
-        self.BH1.place(x=620, y=40)
-        self.BH2.place(x=620, y=190)
-        self.BH3.place(x=620, y=365)
-        self.BH4.place(x=620, y=620)
->>>>>>> f84763e72d4b40d667445d79c49e1b140a1220f0
 
         # Lines to section off each image process
         self.grey_line = ImageTk.PhotoImage(Image.open(self.image_dir + "grey_line.jpg"))
