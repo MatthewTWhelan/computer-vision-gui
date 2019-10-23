@@ -3,3 +3,5 @@ This package runs a GUI that enables users to visualise the results of running v
 The Ubuntu 18.04/16.04 executable is called "main-gui" and located in the main directory, whilst the Windows-OS executable is found in the directory dist-windows and simply called "gui".
 
 Alternatively, it includes a python script titled cv_functions.py that makes it somewhat easier to view how to operate some of the basic OpenCV functions. 
+
+The main script for the GUI is found in gui.py, and is built using the Tkinter package.
